@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¿Qué hacer en caso de inundación? - InundApp Villa Elvira</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos.css" />
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: white;
+      font-family: monospace;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #788CFF;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .btn-volver {
+      margin-top: 30px;
+    }
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #00c853;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+
+    <!-- Header igual al original -->
+    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+      <h1 id="titulo-app" style="color: white;">InundApp Villa Elvira</h1>
+      <div class="d-flex gap-2">
+        <button id="modo-btn" class="btn btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+      </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <div class="app-body" role="region" style="flex-direction: column; background-color: white;color:black" aria-label="Contactos de emergencia">
+      <h1>ℹ️ ¿Qué hacer en caso de inundación?</h1>
+    <p>
+      En caso de inundación, es importante seguir estas recomendaciones para mantenerte seguro:
+    </p>
+    <ul>
+      <li>No intentes cruzar calles o caminos inundados a pie o en vehículo.</li>
+      <li>Desconecta la electricidad y gas si la zona está próxima a inundarse.</li>
+      <li>Busca refugio en lugares altos o designados por las autoridades.</li>
+      <li>Sigue las indicaciones oficiales y mantente informado a través de medios confiables.</li>
+      <li>Prepara un kit de emergencia con agua potable, alimentos no perecederos, medicamentos y documentos importantes.</li>
+      <li>Comunícate con familiares para informar tu situación y planifica rutas de evacuación.</li>
+    </ul>
+      <button class="btn btn-danger btn-volver" onclick="window.location.href='index.html'" aria-label="Volver a la página principal">← Volver</button>
+    </div>
+  </div>
+</body>
+</html>

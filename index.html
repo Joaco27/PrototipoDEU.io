@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InundApp Villa Elvira</title>
+
+  <!-- CSS externos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="estilos.css">
+  <!-- ARIA para navegación mejorada -->
+  <meta name="description" content="Aplicación web informativa y accesible sobre zonas de riesgo por inundación en Villa Elvira, Buenos Aires.">
+</head>
+<body>
+  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+
+    <!-- Encabezado -->
+    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+      <h1 id="titulo-app">InundApp Villa Elvira</h1>
+      <div class="d-flex gap-2">
+        <button id="modo-btn" class="btn btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+      </div>
+    </header>
+    
+    <!-- Contenido principal -->
+    <div class="app-body" role="region" aria-label="Sección principal con mapa y menú lateral">
+      <section class="map-container" aria-label="Mapa de Villa Elvira con zonas de riesgo">
+        <div id="map" role="application" aria-label="Mapa interactivo de Villa Elvira con marcadores de zonas de riesgo"></div>
+        <div class="legend" role="note" aria-label="Indicador visual de zonas de riesgo">
+          <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" alt="Marcador rojo indicando zona de riesgo">
+          <span style="color: black;"><strong>Zonas de riesgo</strong></span>
+        </div>
+      </section>
+
+      <!-- Barra lateral -->
+      <nav class="sidebar" role="navigation" aria-label="Menú lateral de opciones">
+        <button class="btn btn-primary btn-custom" aria-label="Ver información sobre los refugios disponibles" onclick="window.location.href='refugios.html'" >
+          🏠 Conocé los refugios
+        </button>
+        <button class="btn btn-info text-white btn-custom" aria-label="Ver qué hacer en caso de inundación" onclick="window.location.href='que_hacer.html'">
+          ℹ️ ¿Qué hacer en caso de inundación?
+        </button>
+        <button class="btn btn-danger btn-custom" aria-label="Ver contactos de emergencia" onclick="window.location.href='contactos.html'">
+          ☎️ Contactos de emergencia
+        </button>
+        <button class="btn btn-success btn-custom" aria-label="Agregar una observación sobre una zona de riesgo" onclick="window.location.href='agregar_observacion.html'">
+          ➕ Agregar observación
+        </button>
+        <button class="btn btn-secondary btn-custom" aria-label="Ver información sobre el objetivo de la aplicación" onclick="window.location.href='acerca.html'">
+          ℹ️ Acerca de InundApp
+        </button>
+
+        <div class="alert-status" role="status" aria-live="polite" aria-label="Estado de alertas actualizado">
+          ✅ Sin Alertas <br>
+          <small>Última Actualización: 10:33</small>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([-34.9331, -57.9131], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marcador principal
+    const centro = [-34.9331, -57.9131];
+    L.marker(centro)
+      .addTo(map)
+      .openPopup();
+
+    // Generar coordenadas aleatorias alrededor del centro
+    function generarCoordenadaAleatoria(lat, lng, radio) {
+      const offsetLat = (Math.random() - 0.5) * 2 * radio;
+      const offsetLng = (Math.random() - 0.5) * 2 * radio;
+      return [lat + offsetLat, lng + offsetLng];
+    }
+
+    // Agregar 8 marcadores rojos
+    for (let i = 0; i < 8; i++) {
+      const [lat, lng] = generarCoordenadaAleatoria(centro[0], centro[1], 0.0072);
+      L.marker([lat, lng], {
+        icon: new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34]
+        })
+      }).addTo(map)
+        .bindPopup("Zona de riesgo");
+    }
+  </script>
+
+  <script>
+    const modoBtn = document.getElementById('modo-btn');
+
+    const modoGuardado = localStorage.getItem('modo');
+    if (modoGuardado === 'oscuro') {
+      modoBtn.innerHTML = '🌙 Modo Oscuro';
+      modoBtn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+    }
+
+    modoBtn.addEventListener('click', () => {
+      const esClaro = modoBtn.innerHTML.includes('☀️');
+
+      if (esClaro) {
+        modoBtn.innerHTML = '🌙 Modo Oscuro';
+        modoBtn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+        localStorage.setItem('modo', 'oscuro');
+      } else {
+        modoBtn.innerHTML = '☀️ Modo Claro';
+        modoBtn.setAttribute('aria-label', 'Cambiar a modo claro');
+        localStorage.setItem('modo', 'claro');
+      }
+    });
+  </script>
+  
+<script>
+  const fuenteBtn = document.getElementById('fuente-btn');
+
+  const fuenteGuardada = localStorage.getItem('textoGrande');
+  if (fuenteGuardada === 'true') {
+    fuenteBtn.setAttribute('aria-label', 'Reducir tamaño de texto');
+    fuenteBtn.innerHTML = '🔡 Texto normal';
+  }
+
+  fuenteBtn.addEventListener('click', () => {
+    const esGrande = fuenteBtn.innerHTML.includes('🔡');
+    if (esGrande) {
+      fuenteBtn.setAttribute('aria-label', 'Aumentar tamaño de texto');
+      fuenteBtn.innerHTML = '🔠 Ajustar texto';
+      localStorage.setItem('textoGrande', 'false');
+    } else {
+      fuenteBtn.setAttribute('aria-label', 'Reducir tamaño de texto');
+      fuenteBtn.innerHTML = '🔡 Texto normal';
+      localStorage.setItem('textoGrande', 'true');
+    }
+  });
+</script>
+
+</body>
+</html>
