@@ -165,3 +165,39 @@
   background-color: #a22323;
   outline: none;
 }
+
+body.modo-oscuro {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+body.modo-oscuro .app-header {
+  background-color: #333;
+}
+
+body.modo-oscuro .app-body {
+  background-color: #181818;
+  color: #f5f5f5;
+}
+
+body.modo-oscuro .chat-mensajes {
+  background-color: #1e1e1e;
+}
+
+body.modo-oscuro .chat-formulario {
+  background-color: #2b2b2b;
+}
+
+body.modo-oscuro .chat-formulario input[type="text"] {
+  background-color: #444;
+  color: white;
+  border: 1px solid #888;
+}
+
+body.modo-oscuro .chat-formulario button {
+  background-color: #388e3c;
+}
+
+body.modo-oscuro .chat-formulario button:hover {
+  background-color: #2e7d32;
+}

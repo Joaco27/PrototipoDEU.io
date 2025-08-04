@@ -1,158 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agregar Observación - InundApp Villa Elvira</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="estilos.css" />
-    <style>
-      body {
-        color: black;
-        font-family: monospace;
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat de Observaciones - InundApp Villa Elvira</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background-color: white;
+      font-family: monospace;
+      color: black;
+    }
 
-      h1 {
-        color: #43a047;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-      #map {
-        flex: 1;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-      }
+    .app-header {
+      background-color: #788CFF;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .btn-volver {
-        margin-bottom: 10px;
-      }
+    .app-header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
 
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
+    .btn-modo-claro {
+      background-color: #ffffff;
+      color: #333;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
 
-      input[type="text"] {
-        border-radius: 8px;
-        border: none;
-        padding: 10px;
-        font-family: monospace;
-        font-size: 1rem;
-      }
+    .btn-modo-claro:hover,
+    .btn-modo-claro:focus {
+      background-color: #e0e0e0;
+      transform: scale(1.05);
+      outline: none;
+    }
 
-      button[type="submit"] {
-        border-radius: 12px;
-        padding: 10px;
-        background-color: #43a047;
-        border: none;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-      }
+    .btn-modo-claro:focus {
+      box-shadow: 0 0 0 3px #788CFF;
+    }
 
-      button[type="submit"]:hover {
-        background-color: #388e3c;
-      }
+    .app-body {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-      .info-text {
-        font-size: 0.9rem;
-        color: #b0bec5;
-      }
-    </style>
-  </head>
+    .app-body h1 {
+      color: #788CFF;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
 
-  <body>
-    <div class="app" role="main" aria-label="Sección de información sobre InundApp">
-      <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
-        <h1 id="titulo-app" style="color: white;">InundApp Villa Elvira</h1>
-        <div class="d-flex gap-2">
-          <button id="modo-btn" class="btn btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
-          <button id="fuente-btn" class="btn btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .chat-mensajes {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .mensaje {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .mensaje strong {
+      color: #33691e;
+    }
+
+    .chat-formulario {
+      display: flex;
+      gap: 10px;
+      padding: 1rem;
+      background-color: #fff;
+    }
+
+    .chat-formulario input[type="text"] {
+      flex: 1;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 1rem;
+    }
+
+    .chat-formulario button {
+      border-radius: 12px;
+      padding: 10px 16px;
+      background-color: #43a047;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chat-formulario button:hover {
+      background-color: #388e3c;
+    }
+
+    .btn-volver {
+      background-color: #c62828;
+      color: white;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: bold;
+      font-size: 1rem;
+      text-decoration: none;
+      width: fit-content;
+      transition: background-color 0.3s ease;
+      border: none;
+      margin-top: 1rem;
+    }
+
+    .btn-volver:hover,
+    .btn-volver:focus {
+      background-color: #a22323;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+
+    <!-- Encabezado -->
+    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+      <h1 id="titulo-app">InundApp Villa Elvira</h1>
+      <div class="d-flex gap-2">
+        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+      </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <div class="app-body" role="region" aria-label="Chat grupal de observaciones de zonas de riesgo">
+      <h1>💬 Chat de Zonas en Riesgo</h1>
+      <div class="chat-container">
+        <div id="chat-mensajes" class="chat-mensajes" aria-live="polite">
+          <!-- Mensajes cargados dinámicamente -->
         </div>
-      </header>
+        <form id="chat-form" class="chat-formulario" aria-label="Formulario para enviar observaciones">
+          <input type="text" id="mensaje" name="mensaje" required placeholder="Ej: Calle 7 entre 78 y 79 con agua acumulada..." />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
 
-      <div class="app-body p-4 overflow-auto" style="display: flex; flex-direction: column; background-color: white; color: black; height: 100%;">
-  
-  <div style="display: flex; gap: 2rem; flex-grow: 1;">
-    <!-- Izquierda: título, texto y mapa -->
-    <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem; align-items: flex-start;">
-      <h1>➕ Agregar Observación</h1>
-      <p class="info-text" style="color: black;">Seleccioná en el mapa el punto que consideres una zona de riesgo.</p>
-      <div id="map" role="application" aria-label="Mapa para seleccionar zona de riesgo" style="flex-grow: 1; min-height: 300px; width: 100%; border: 1px solid #ccc;"></div>
+      <a class="btn-volver" href="index.html">← Volver</a>
     </div>
-  
-    <!-- Derecha: formulario -->
-    <form id="observacion-form" aria-label="Formulario para agregar observación de zona de riesgo" style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
-      <label for="descripcion">Descripción de la observación:</label>
-      <input type="text" id="descripcion" name="descripcion" required placeholder="Ejemplo: Zona con desagüe obstruido" />
-      <button type="submit" aria-label="Enviar observación">Enviar Observación</button>
-    </form>
   </div>
-  
-  <!-- Botón volver ocupa todo el ancho -->
-  <button class="btn btn-danger btn-volver mt-3" style="width: 100%;" onclick="window.location.href='index.html'" aria-label="Volver a la página principal">← Volver</button>
 
-</div>
+  <script src="main.js"></script>
 
-    </div>
+  <script>
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('mensaje');
+    const chat = document.getElementById('chat-mensajes');
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-      const map = L.map('map').setView([-34.9331, -57.9131], 15);
+    // Mensajes precargados de ejemplo
+    const mensajesIniciales = [
+      { hora: "10:15", texto: "Calle 75 y 116 totalmente anegada, el agua llega al cordón." },
+      { hora: "10:18", texto: "Hay ramas tapando la alcantarilla en 122 y 71, no drena el agua." },
+      { hora: "10:21", texto: "Se ve gente con agua entrando en sus casas en 78 e/ 8 y 9. Precaución." },
+      { hora: "10:24", texto: "Confirmo lo de 75 y 116. Difícil de circular incluso con vehículos." },
+      { hora: "10:26", texto: "En la esquina de 13 y 80 hay un auto detenido por la corriente. Evitar la zona." }
+    ];
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
+    mensajesIniciales.forEach(m => {
+      const msg = document.createElement('div');
+      msg.classList.add('mensaje');
+      msg.innerHTML = `<strong>${m.hora}</strong>: ${m.texto}`;
+      chat.appendChild(msg);
+    });
 
-      let marcador;
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const texto = input.value.trim();
+      if (!texto) return;
 
-      map.on('click', function (e) {
-        if (marcador) {
-          map.removeLayer(marcador);
-        }
+      const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const nuevoMensaje = document.createElement('div');
+      nuevoMensaje.classList.add('mensaje');
+      nuevoMensaje.innerHTML = `<strong>${hora}</strong>: ${texto}`;
+      chat.appendChild(nuevoMensaje);
 
-        marcador = L.marker(e.latlng, {
-          icon: new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
-          })
-        }).addTo(map).openPopup();
-      });
-
-      const form = document.getElementById('observacion-form');
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-
-        if (!marcador) {
-          alert('Por favor, seleccioná un punto en el mapa.');
-          return;
-        }
-
-        const descripcion = form.descripcion.value.trim();
-        if (!descripcion) {
-          alert('Por favor, escribí una descripción.');
-          return;
-        }
-
-        const latlng = marcador.getLatLng();
-        alert(`Observación enviada:\nDescripción: ${descripcion}\nUbicación: ${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`);
-
-        // Aquí podrías agregar código para enviar la observación a un backend o almacenarla localmente.
-        form.reset();
-        map.removeLayer(marcador);
-        marcador = null;
-      });
-    </script>
-  </body>
+      chat.scrollTop = chat.scrollHeight;
+      input.value = '';
+    });
+  </script>
+</body>
 </html>
