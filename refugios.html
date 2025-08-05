@@ -93,6 +93,29 @@
     .leaflet-marker-pane .leaflet-popup-content {
       color: black !important;
     }
+
+
+
+    body.modo-oscuro {
+      background-color: #121212 !important;
+      color: #f5f5f5 !important;
+    }
+
+    body.modo-oscuro .app-header {
+      background-color: #333 !important;
+    }
+
+    body.modo-oscuro .btn-modo-claro {
+      background-color: #2c2c2c !important;
+      color: #f5f5f5 !important;
+      border: 1px solid #555;
+    }
+
+    body.modo-oscuro #map {
+      border-color: #666 !important;
+    }
+
+
   </style>
 </head>
 <body>
@@ -110,6 +133,40 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modoGuardado = localStorage.getItem('modoOscuro');
+      const tamañoFuente = localStorage.getItem('tamañoFuente');
+
+      const html = document.documentElement;
+      const body = document.body;
+      const header = document.querySelector('.app-header');
+      const appBody = document.querySelector('.app-body');
+
+      if (modoGuardado === 'true') {
+        body.style.backgroundColor = '#121212';
+        body.style.color = '#f5f5f5';
+        if (header) header.style.backgroundColor = '#333';
+        if (appBody) {
+          appBody.style.backgroundColor = '#181818';
+          appBody.style.color = '#f5f5f5';
+        }
+
+        const modoBtn = document.getElementById('modo-btn');
+        if (modoBtn) {
+          modoBtn.innerText = '🌙 Modo Oscuro';
+          modoBtn.setAttribute('aria-label', 'Cambiar a modo claro');
+        }
+      }
+
+      if (tamañoFuente) {
+        html.style.fontSize = tamañoFuente;
+      }
+    });
+  </script>
+
+
   <script src="main.js"></script>
 
   <script>

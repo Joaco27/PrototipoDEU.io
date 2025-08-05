@@ -181,7 +181,41 @@
     </div>
   </div>
 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modoGuardado = localStorage.getItem('modoOscuro');
+      const tamañoFuente = localStorage.getItem('tamañoFuente');
+
+      const html = document.documentElement;
+      const body = document.body;
+      const header = document.querySelector('.app-header');
+      const appBody = document.querySelector('.app-body');
+
+      if (modoGuardado === 'true') {
+        body.style.backgroundColor = '#121212';
+        body.style.color = '#f5f5f5';
+        if (header) header.style.backgroundColor = '#333';
+        if (appBody) {
+          appBody.style.backgroundColor = '#181818';
+          appBody.style.color = '#f5f5f5';
+        }
+
+        const modoBtn = document.getElementById('modo-btn');
+        if (modoBtn) {
+          modoBtn.innerText = '🌙 Modo Oscuro';
+          modoBtn.setAttribute('aria-label', 'Cambiar a modo claro');
+        }
+      }
+
+      if (tamañoFuente) {
+        html.style.fontSize = tamañoFuente;
+      }
+    });
+  </script>
+
   <script src="main.js"></script>
+
 
   <script>
     const form = document.getElementById('chat-form');
