@@ -1,4 +1,3 @@
-  <script src="main.js"></script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,8 +68,8 @@
       overflow-y: auto;
     }
 
-    .app-body a{
-      color:white
+    .app-body a {
+      color: white;
     }
 
     .app-body h1 {
@@ -110,25 +109,22 @@
       background-color: #a22323;
       outline: none;
     }
-
-    
   </style>
 </head>
-<body>
-  <div class="app" role="main" aria-label="Sección de información sobre InundApp">
+<body aria-label="Página con información general sobre InundApp Villa Elvira">
+  <div class="app" role="main" aria-label="Contenido principal de la aplicación InundApp">
+
     <!-- Encabezado -->
-    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+    <header class="app-header" role="banner" aria-label="Encabezado con nombre de la aplicación y configuración de accesibilidad">
       <h1 id="titulo-app">InundApp Villa Elvira</h1>
       <div class="d-flex gap-2">
-        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
+        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar entre modo claro y oscuro">☀️ Modo Claro</button>
         <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
       </div>
     </header>
 
-      <script src="main.js"></script>
-
     <!-- Contenido principal -->
-    <div class="app-body" role="region" aria-label="Descripción de la aplicación">
+    <div class="app-body" role="region" aria-label="Sección informativa sobre el propósito y funcionalidades de InundApp">
       <h1>🌧️ Acerca de InundApp</h1>
       <p>
         InundApp Villa Elvira es una aplicación web accesible cuyo objetivo principal es brindar a la comunidad información útil y visual sobre zonas con riesgo de inundación en Villa Elvira, Buenos Aires.
@@ -146,11 +142,11 @@
       <p>
         Desarrollada por los alumnos Joaquín Tartaruga y Manuel Rubiano para la materia Diseño y Experiencia de Usuario. La aplicación fue desarrollada siguiendo principios de accesibilidad y buenas prácticas de diseño universal.
       </p>
-      <a class="btn-volver" href="index.html" aria-label="Volver a la página principal" style="color:white">← Volver</a>
+      <a class="btn-volver" href="index.html" aria-label="Volver a la página principal">← Volver</a>
     </div>
   </div>
 
-
+  <!-- Script para accesibilidad (modo oscuro y tamaño fuente) -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const modoGuardado = localStorage.getItem('modoOscuro');
@@ -184,7 +180,5 @@
   </script>
 
   <script src="main.js"></script>
-
-
 </body>
 </html>

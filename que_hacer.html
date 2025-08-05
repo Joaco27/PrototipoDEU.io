@@ -108,24 +108,24 @@
   </style>
 </head>
 <body>
-  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+  <div class="app" aria-label="Aplicación que informa recomendaciones para actuar en caso de inundación en Villa Elvira">
 
     <!-- Encabezado -->
-    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+    <header class="app-header" aria-label="Encabezado con el título de la aplicación y botones para cambiar tema y tamaño de fuente">
       <h1 id="titulo-app">InundApp Villa Elvira</h1>
       <div class="d-flex gap-2">
-        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
-        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar entre modo claro y modo oscuro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto para facilitar la lectura">🔠 Ajustar texto</button>
       </div>
     </header>
 
     <!-- Contenido principal -->
-    <div class="app-body" role="region" aria-label="Recomendaciones en caso de inundación">
+    <main class="app-body" aria-label="Sección con recomendaciones sobre qué hacer en caso de inundación">
       <h1>ℹ️ ¿Qué hacer en caso de inundación?</h1>
       <p>
         En caso de inundación, es importante seguir estas recomendaciones para mantenerte seguro:
       </p>
-      <ul>
+      <ul aria-label="Lista de recomendaciones para actuar durante una inundación">
         <li>No intentes cruzar calles o caminos inundados a pie o en vehículo.</li>
         <li>Desconecta la electricidad y gas si la zona está próxima a inundarse.</li>
         <li>Busca refugio en lugares altos o designados por las autoridades.</li>
@@ -133,8 +133,8 @@
         <li>Prepara un kit de emergencia con agua potable, alimentos no perecederos, medicamentos y documentos importantes.</li>
         <li>Comunícate con familiares para informar tu situación y planifica rutas de evacuación.</li>
       </ul>
-      <a class="btn-volver" href="index.html">← Volver</a>
-    </div>
+      <a class="btn-volver" href="index.html" aria-label="Volver a la página principal de InundApp Villa Elvira">← Volver</a>
+    </main>
   </div>
 
   <script>
@@ -169,8 +169,6 @@
     });
   </script>
 
-
   <script src="main.js"></script>
-
 </body>
 </html>

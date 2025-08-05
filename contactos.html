@@ -91,69 +91,94 @@
       background-color: #a22323;
       outline: none;
     }
+
+    .contacto-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 1rem;
+      height: 100%;
+      background-color: #f8f9fa;
+      color: black;
+    }
+
+    .contacto-box h5 {
+      font-weight: bold;
+    }
+
+    .dark-mode .contacto-box {
+      background-color: #222;
+      color: #eee;
+    }
+
+    .dark-mode .contacto-box h5,
+    .dark-mode .contacto-box p {
+      color: #eee;
+    }
+
+    .dark-mode .btn-volver {
+      color: white;
+    }
   </style>
 </head>
-<body>
-  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+<body aria-label="Página de contactos de emergencia para situaciones de inundación">
 
-    <!-- Encabezado -->
-    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+  <div class="app" role="main" aria-label="Listado de contactos de emergencia en Villa Elvira">
+    <header class="app-header" role="banner" aria-label="Encabezado con opciones de accesibilidad">
       <h1 id="titulo-app">InundApp Villa Elvira</h1>
       <div class="d-flex gap-2">
-        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
-        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+        <button id="modo-btn" class="btn-modo-claro" aria-label="Alternar modo claro u oscuro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de fuente">🔠 Ajustar texto</button>
       </div>
     </header>
 
-    <!-- Contenido -->
-    <div class="app-body" role="region" aria-label="Contactos de emergencia">
+    <div class="app-body" role="region" aria-label="Sección de contactos útiles">
       <h1>☎️ Contactos de emergencia</h1>
 
       <div class="row g-4">
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Contacto Policía, teléfono 911">
             <h5>👮 Policía</h5>
             <p class="mb-0">Teléfono: 911</p>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Contacto Bomberos, teléfono 100">
             <h5>🚒 Bomberos</h5>
             <p class="mb-0">Teléfono: 100</p>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Emergencias médicas, teléfono 107">
             <h5>🚑 Emergencias Médicas</h5>
             <p class="mb-0">Teléfono: 107</p>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Defensa Civil, teléfono (0221) 429-1234">
             <h5>🛡️ Defensa Civil</h5>
             <p class="mb-0">Teléfono: (0221) 429-1234</p>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Hospital San Martín, teléfono (0221) 480-1234">
             <h5>🏥 Hospital San Martín</h5>
             <p class="mb-0">Teléfono: (0221) 480-1234</p>
           </div>
         </div>
 
         <div class="col-md-6">
-          <div class="border rounded p-3 h-100">
+          <div class="contacto-box" aria-label="Atención Ciudadana Villa Elvira, teléfono (0221) 429-5678">
             <h5>📍 Atención Ciudadana Villa Elvira</h5>
             <p class="mb-0">Teléfono: (0221) 429-5678</p>
           </div>
         </div>
       </div>
 
-      <a class="btn-volver mt-4" href="index.html" aria-label="Volver a la página principal">← Volver</a>
+      <a class="btn-volver mt-4" href="index.html" aria-label="Volver a la página de inicio">← Volver</a>
     </div>
   </div>
 
@@ -170,6 +195,7 @@
       if (modoGuardado === 'true') {
         body.style.backgroundColor = '#121212';
         body.style.color = '#f5f5f5';
+        body.classList.add('dark-mode');
         if (header) header.style.backgroundColor = '#333';
         if (appBody) {
           appBody.style.backgroundColor = '#181818';
@@ -188,7 +214,6 @@
       }
     });
   </script>
-
 
   <script src="main.js"></script>
 </body>

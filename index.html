@@ -24,10 +24,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     #titulo-app {
       margin: 0;
       font-size: 1.8rem;
+    }
+    .descripcion-app {
+      font-size: 0.95rem;
+      margin-top: 4px;
+      color: white;
+      font-weight: 300;
+      width: 100%;
     }
     .btn {
       display: inline-block;
@@ -130,59 +138,47 @@
       font-weight: normal;
       font-size: 0.85em;
     }
-
-
-
-    body.modo-oscuro .sidebar {
-      background-color: #1e1e1e;
-    }
-
-    body.modo-oscuro .map-container {
-      background-color: #181818;
-    }
-
-    body.modo-oscuro .alert-status {
-      background-color: #2e7d32; /* un verde oscuro accesible */
-      color: #fff;
-    }
-
-    body.modo-oscuro .btn-custom {
-      color: white !important;
-    }
-
+    body.modo-oscuro .sidebar { background-color: #1e1e1e; }
+    body.modo-oscuro .map-container { background-color: #181818; }
+    body.modo-oscuro .alert-status { background-color: #2e7d32; color: #fff; }
+    body.modo-oscuro .btn-custom { color: white !important; }
     body.modo-oscuro .btn-primary { background-color: #0a58ca; }
     body.modo-oscuro .btn-info { background-color: #0bb5d4; }
     body.modo-oscuro .btn-danger { background-color: #b02a37; }
     body.modo-oscuro .btn-success { background-color: #146c43; }
     body.modo-oscuro .btn-secondary { background-color: #495057; }
-
-
   </style>
 </head>
 <body>
-  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
-    <header class="app-header" role="banner">
-      <h1 id="titulo-app">InundApp Villa Elvira</h1>
+  <div class="app" aria-label="Aplicación web interactiva que muestra zonas de riesgo de inundación en Villa Elvira y permite acceder a información clave.">
+    <header class="app-header" aria-label="Encabezado de la aplicación con el título y botones de accesibilidad">
+      <div>
+        <h1 id="titulo-app">InundApp Villa Elvira</h1>
+        <p class="descripcion-app">App accesible sobre zonas de riesgo de inundación en Villa Elvira.</p>
+      </div>
       <div class="d-flex gap-2">
-        <button id="modo-btn" class="btn btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
-        <button id="fuente-btn" class="btn btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+        <button id="modo-btn" class="btn btn-modo-claro" aria-label="Cambiar entre modo claro y modo oscuro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn btn-modo-claro" aria-label="Ajustar el tamaño del texto para mejor lectura">🔠 Ajustar texto</button>
       </div>
     </header>
-    <div class="app-body">
-      <section class="map-container">
+
+    <div class="app-body" aria-label="Contenido principal de la aplicación que incluye el mapa y la barra lateral con accesos directos">
+      <section class="map-container" aria-label="Mapa principal que muestra zonas de riesgo marcadas en Villa Elvira">
+        <h2 class="visually-hidden">Mapa de zonas de riesgo</h2>
         <div id="map"></div>
-        <div class="legend">
+        <div class="legend" aria-label="Leyenda que explica el significado de los íconos en el mapa">
           <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png" alt="Marcador rojo indicando zona de riesgo">
           <span><strong>Zonas de riesgo</strong></span>
         </div>
       </section>
-      <nav class="sidebar">
-        <a class="btn btn-primary btn-custom" href="refugios.html">🏠 Conocé los refugios</a>
-        <a class="btn btn-info btn-custom" href="que_hacer.html">ℹ️ ¿Qué hacer en caso de inundación?</a>
-        <a class="btn btn-danger btn-custom" href="contactos.html">☎️ Contactos de emergencia</a>
-        <a class="btn btn-success btn-custom" href="agregar_observacion.html">➕ Informar Zona de Riesgo</a>
-        <a class="btn btn-secondary btn-custom" href="acerca.html">ℹ️ Acerca de InundApp</a>
-        <div class="alert-status">
+
+      <nav class="sidebar" aria-label="Menú lateral con accesos rápidos a información y acciones">
+        <a class="btn btn-primary btn-custom" href="refugios.html" aria-label="Ir a la página con información sobre refugios en caso de evacuación">🏠 Conocé los refugios</a>
+        <a class="btn btn-info btn-custom" href="que_hacer.html" aria-label="Ver recomendaciones sobre qué hacer en caso de inundación">ℹ️ ¿Qué hacer en caso de inundación?</a>
+        <a class="btn btn-danger btn-custom" href="contactos.html" aria-label="Consultar contactos de emergencia como bomberos, policía y hospitales">☎️ Contactos de emergencia</a>
+        <a class="btn btn-success btn-custom" href="agregar_observacion.html" aria-label="Acceder a formulario para informar una zona de riesgo de inundación">➕ Informar Zona de Riesgo</a>
+        <a class="btn btn-secondary btn-custom" href="acerca.html" aria-label="Ver información acerca de la aplicación InundApp Villa Elvira">ℹ️ Acerca de InundApp</a>
+        <div class="alert-status" aria-label="Estado de alertas actualizado">
           ✅ Sin Alertas <br>
           <small>Última Actualización: 10:33</small>
         </div>

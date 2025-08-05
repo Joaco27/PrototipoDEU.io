@@ -152,36 +152,34 @@
     }
   </style>
 </head>
-<body>
-  <div class="app" role="main" aria-label="Aplicación web sobre zonas de riesgo en Villa Elvira">
+<body aria-label="Página de chat de observaciones de zonas de riesgo">
 
-    <!-- Encabezado -->
-    <header class="app-header" role="banner" aria-label="Encabezado con título y configuración de tema">
+  <div class="app" role="main" aria-label="Aplicación para registrar observaciones en zonas inundables">
+    <header class="app-header" role="banner" aria-label="Encabezado con controles de accesibilidad">
       <h1 id="titulo-app">InundApp Villa Elvira</h1>
       <div class="d-flex gap-2">
-        <button id="modo-btn" class="btn-modo-claro" aria-label="Cambiar a modo claro">☀️ Modo Claro</button>
-        <button id="fuente-btn" class="btn-modo-claro" aria-label="Ajustar tamaño de texto">🔠 Ajustar texto</button>
+        <button id="modo-btn" class="btn-modo-claro" aria-label="Alternar modo claro u oscuro">☀️ Modo Claro</button>
+        <button id="fuente-btn" class="btn-modo-claro" aria-label="Aumentar o reducir tamaño de texto">🔠 Ajustar texto</button>
       </div>
     </header>
 
-    <!-- Contenido principal -->
-    <div class="app-body" role="region" aria-label="Chat grupal de observaciones de zonas de riesgo">
+    <div class="app-body" role="region" aria-label="Sección de chat colaborativo para reportes en tiempo real">
       <h1>💬 Chat de Zonas en Riesgo</h1>
       <div class="chat-container">
-        <div id="chat-mensajes" class="chat-mensajes" aria-live="polite">
+        <div id="chat-mensajes" class="chat-mensajes" aria-live="polite" aria-label="Mensajes recientes del chat">
           <!-- Mensajes cargados dinámicamente -->
         </div>
-        <form id="chat-form" class="chat-formulario" aria-label="Formulario para enviar observaciones">
-          <input type="text" id="mensaje" name="mensaje" required placeholder="Ej: Calle 7 entre 78 y 79 con agua acumulada..." />
-          <button type="submit">Enviar</button>
+        <form id="chat-form" class="chat-formulario" aria-label="Formulario para enviar una nueva observación">
+          <input type="text" id="mensaje" name="mensaje" required placeholder="Ej: Calle 7 entre 78 y 79 con agua acumulada..." aria-label="Escriba su mensaje de observación" />
+          <button type="submit" aria-label="Enviar mensaje">Enviar</button>
         </form>
       </div>
 
-      <a class="btn-volver" href="index.html">← Volver</a>
+      <a class="btn-volver" href="index.html" aria-label="Volver a la página principal">← Volver</a>
     </div>
   </div>
 
-
+  <!-- Scripts para accesibilidad y chat -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const modoGuardado = localStorage.getItem('modoOscuro');
@@ -216,16 +214,12 @@
 
   <script src="main.js"></script>
 
-
   <script>
     const form = document.getElementById('chat-form');
     const input = document.getElementById('mensaje');
     const chat = document.getElementById('chat-mensajes');
-
-    // Clave de almacenamiento
     const STORAGE_KEY = "observacionesInundApp";
 
-    // Función para cargar mensajes desde localStorage
     function cargarMensajes() {
       const guardados = localStorage.getItem(STORAGE_KEY);
       if (guardados) {
@@ -238,32 +232,29 @@
       return [];
     }
 
-    // Función para guardar mensajes en localStorage
     function guardarMensajes(mensajes) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(mensajes));
     }
 
-    // Cargar mensajes guardados (si hay)
     let mensajes = cargarMensajes();
 
-    // Si no hay ninguno, precargar los ejemplos solo una vez
     if (mensajes.length === 0) {
       mensajes = [
-        { hora: "10:15", texto: "Calle 75 y 116 totalmente anegada, el agua llega al cordón." },
-        { hora: "10:18", texto: "Hay ramas tapando la alcantarilla en 122 y 71, no drena el agua." },
-        { hora: "10:21", texto: "Se ve gente con agua entrando en sus casas en 78 e/ 8 y 9. Precaución." },
-        { hora: "10:24", texto: "Confirmo lo de 75 y 116. Difícil de circular incluso con vehículos." },
-        { hora: "10:26", texto: "En la esquina de 13 y 80 hay un auto detenido por la corriente. Evitar la zona." }
+        { hora: "10:15 p. m.", texto: "Calle 75 y 116 totalmente anegada, el agua llega al cordón." },
+        { hora: "10:18 p. m.", texto: "Hay ramas tapando la alcantarilla en 122 y 71, no drena el agua." },
+        { hora: "10:21 p. m.", texto: "Se ve gente con agua entrando en sus casas en 78 e/ 8 y 9. Precaución." },
+        { hora: "10:24 p. m.", texto: "Confirmo lo de 75 y 116. Difícil de circular incluso con vehículos." },
+        { hora: "10:26 p. m.", texto: "En la esquina de 13 y 80 hay un auto detenido por la corriente. Evitar la zona." }
       ];
       guardarMensajes(mensajes);
     }
 
-    // Mostrar todos los mensajes
     function renderizarMensajes() {
       chat.innerHTML = '';
       mensajes.forEach(m => {
         const msg = document.createElement('div');
         msg.classList.add('mensaje');
+        msg.setAttribute('aria-label', `Mensaje recibido a las ${m.hora}`);
         msg.innerHTML = `<strong>${m.hora}</strong>: ${m.texto}`;
         chat.appendChild(msg);
       });
@@ -282,7 +273,6 @@
       mensajes.push(nuevoMensaje);
       guardarMensajes(mensajes);
       renderizarMensajes();
-
       input.value = '';
     });
   </script>
