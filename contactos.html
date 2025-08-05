@@ -73,24 +73,6 @@
       gap: 10px;
     }
 
-    .app-body ul {
-      padding-left: 1.2rem;
-      margin-bottom: 2rem;
-    }
-
-    .app-body ul li {
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .app-body ul li strong {
-      display: block;
-      color: #33691e;
-      font-size: 1.1rem;
-      margin-bottom: 0.2rem;
-    }
-
     .btn-volver {
       background-color: #c62828;
       color: white;
@@ -126,15 +108,52 @@
     <!-- Contenido -->
     <div class="app-body" role="region" aria-label="Contactos de emergencia">
       <h1>☎️ Contactos de emergencia</h1>
-      <ul>
-        <li><strong>Policía</strong>911</li>
-        <li><strong>Bomberos</strong>100</li>
-        <li><strong>Emergencias Médicas</strong>107</li>
-        <li><strong>Defensa Civil</strong>(0221) 429-1234</li>
-        <li><strong>Hospital San Martín</strong>(0221) 480-1234</li>
-        <li><strong>Centro de Atención Ciudadana Villa Elvira</strong>(0221) 429-5678</li>
-      </ul>
-      <a class="btn-volver" href="index.html" aria-label="Volver a la página principal">← Volver</a>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>👮 Policía</h5>
+            <p class="mb-0">Teléfono: 911</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>🚒 Bomberos</h5>
+            <p class="mb-0">Teléfono: 100</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>🚑 Emergencias Médicas</h5>
+            <p class="mb-0">Teléfono: 107</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>🛡️ Defensa Civil</h5>
+            <p class="mb-0">Teléfono: (0221) 429-1234</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>🏥 Hospital San Martín</h5>
+            <p class="mb-0">Teléfono: (0221) 480-1234</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="border rounded p-3 h-100">
+            <h5>📍 Atención Ciudadana Villa Elvira</h5>
+            <p class="mb-0">Teléfono: (0221) 429-5678</p>
+          </div>
+        </div>
+      </div>
+
+      <a class="btn-volver mt-4" href="index.html" aria-label="Volver a la página principal">← Volver</a>
     </div>
   </div>
 
@@ -172,6 +191,5 @@
 
 
   <script src="main.js"></script>
-
 </body>
 </html>
