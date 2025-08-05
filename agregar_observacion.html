@@ -222,21 +222,55 @@
     const input = document.getElementById('mensaje');
     const chat = document.getElementById('chat-mensajes');
 
-    // Mensajes precargados de ejemplo
-    const mensajesIniciales = [
-      { hora: "10:15", texto: "Calle 75 y 116 totalmente anegada, el agua llega al cordón." },
-      { hora: "10:18", texto: "Hay ramas tapando la alcantarilla en 122 y 71, no drena el agua." },
-      { hora: "10:21", texto: "Se ve gente con agua entrando en sus casas en 78 e/ 8 y 9. Precaución." },
-      { hora: "10:24", texto: "Confirmo lo de 75 y 116. Difícil de circular incluso con vehículos." },
-      { hora: "10:26", texto: "En la esquina de 13 y 80 hay un auto detenido por la corriente. Evitar la zona." }
-    ];
+    // Clave de almacenamiento
+    const STORAGE_KEY = "observacionesInundApp";
 
-    mensajesIniciales.forEach(m => {
-      const msg = document.createElement('div');
-      msg.classList.add('mensaje');
-      msg.innerHTML = `<strong>${m.hora}</strong>: ${m.texto}`;
-      chat.appendChild(msg);
-    });
+    // Función para cargar mensajes desde localStorage
+    function cargarMensajes() {
+      const guardados = localStorage.getItem(STORAGE_KEY);
+      if (guardados) {
+        try {
+          return JSON.parse(guardados);
+        } catch {
+          return [];
+        }
+      }
+      return [];
+    }
+
+    // Función para guardar mensajes en localStorage
+    function guardarMensajes(mensajes) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mensajes));
+    }
+
+    // Cargar mensajes guardados (si hay)
+    let mensajes = cargarMensajes();
+
+    // Si no hay ninguno, precargar los ejemplos solo una vez
+    if (mensajes.length === 0) {
+      mensajes = [
+        { hora: "10:15", texto: "Calle 75 y 116 totalmente anegada, el agua llega al cordón." },
+        { hora: "10:18", texto: "Hay ramas tapando la alcantarilla en 122 y 71, no drena el agua." },
+        { hora: "10:21", texto: "Se ve gente con agua entrando en sus casas en 78 e/ 8 y 9. Precaución." },
+        { hora: "10:24", texto: "Confirmo lo de 75 y 116. Difícil de circular incluso con vehículos." },
+        { hora: "10:26", texto: "En la esquina de 13 y 80 hay un auto detenido por la corriente. Evitar la zona." }
+      ];
+      guardarMensajes(mensajes);
+    }
+
+    // Mostrar todos los mensajes
+    function renderizarMensajes() {
+      chat.innerHTML = '';
+      mensajes.forEach(m => {
+        const msg = document.createElement('div');
+        msg.classList.add('mensaje');
+        msg.innerHTML = `<strong>${m.hora}</strong>: ${m.texto}`;
+        chat.appendChild(msg);
+      });
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    renderizarMensajes();
 
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -244,14 +278,14 @@
       if (!texto) return;
 
       const hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const nuevoMensaje = document.createElement('div');
-      nuevoMensaje.classList.add('mensaje');
-      nuevoMensaje.innerHTML = `<strong>${hora}</strong>: ${texto}`;
-      chat.appendChild(nuevoMensaje);
+      const nuevoMensaje = { hora, texto };
+      mensajes.push(nuevoMensaje);
+      guardarMensajes(mensajes);
+      renderizarMensajes();
 
-      chat.scrollTop = chat.scrollHeight;
       input.value = '';
     });
   </script>
+
 </body>
 </html>

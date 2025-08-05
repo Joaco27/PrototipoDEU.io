@@ -1,34 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const modoBtn = document.getElementById('modo-btn');
-  const fuenteBtn = document.getElementById('fuente-btn');
-  const header = document.querySelector('.app-header');
+  const modoBtn = document.getElementById("modo-btn");
+  const fuenteBtn = document.getElementById("fuente-btn");
   const html = document.documentElement;
   const body = document.body;
-  const appBody = document.querySelector('.app-body');
-  const chatMensajes = document.querySelector('.chat-mensajes');
-  const chatForm = document.querySelector('.chat-formulario');
-  const chatInput = document.querySelector('.chat-formulario input[type="text"]');
-  const chatButton = document.querySelector('.chat-formulario button');
 
-  // Modo oscuro
+  // Elementos opcionales, solo existen en algunas vistas
+  const header = document.querySelector(".app-header");
+  const appBody = document.querySelector(".app-body");
+  const chatMensajes = document.querySelector(".chat-mensajes");
+  const chatForm = document.querySelector(".chat-formulario");
+  const chatInput = document.querySelector(".chat-formulario input[type='text']");
+  const chatButton = document.querySelector(".chat-formulario button");
+
+  // === MODO OSCURO ===
   let modoOscuro = localStorage.getItem("modoOscuro") === "true";
-  if (modoOscuro) {
-    activarModoOscuro();
+  if (modoOscuro) aplicarModoOscuro();
+
+  if (modoBtn) {
+    modoBtn.innerText = modoOscuro ? "🌙 Modo Oscuro" : "☀️ Modo Claro";
+    modoBtn.setAttribute(
+      "aria-label",
+      modoOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+    );
+
+    modoBtn.addEventListener("click", () => {
+      modoOscuro = !modoOscuro;
+      localStorage.setItem("modoOscuro", modoOscuro);
+      modoOscuro ? aplicarModoOscuro() : aplicarModoClaro();
+    });
   }
 
-  modoBtn.addEventListener("click", () => {
-    modoOscuro = !modoOscuro;
-    localStorage.setItem("modoOscuro", modoOscuro);
-    if (modoOscuro) {
-      activarModoOscuro();
-    } else {
-      desactivarModoOscuro();
-    }
-  });
+  function aplicarModoOscuro() {
+    body.classList.add("modo-oscuro");
 
-  function activarModoOscuro() {
     body.style.backgroundColor = "#121212";
     body.style.color = "#f5f5f5";
+
     if (header) header.style.backgroundColor = "#333";
     if (appBody) {
       appBody.style.backgroundColor = "#181818";
@@ -46,13 +53,18 @@ document.addEventListener("DOMContentLoaded", function () {
       chatButton.style.color = "#fff";
     }
 
-    modoBtn.innerText = "🌙 Modo Oscuro";
-    modoBtn.setAttribute("aria-label", "Cambiar a modo claro");
+    if (modoBtn) {
+      modoBtn.innerText = "🌙 Modo Oscuro";
+      modoBtn.setAttribute("aria-label", "Cambiar a modo claro");
+    }
   }
 
-  function desactivarModoOscuro() {
+  function aplicarModoClaro() {
+    body.classList.remove("modo-oscuro");
+
     body.style.backgroundColor = "white";
     body.style.color = "black";
+
     if (header) header.style.backgroundColor = "#788CFF";
     if (appBody) {
       appBody.style.backgroundColor = "white";
@@ -70,19 +82,23 @@ document.addEventListener("DOMContentLoaded", function () {
       chatButton.style.color = "#fff";
     }
 
-    modoBtn.innerText = "☀️ Modo Claro";
-    modoBtn.setAttribute("aria-label", "Cambiar a modo oscuro");
+    if (modoBtn) {
+      modoBtn.innerText = "☀️ Modo Claro";
+      modoBtn.setAttribute("aria-label", "Cambiar a modo oscuro");
+    }
   }
 
-  // Tamaño de fuente
+  // === TAMAÑO DE FUENTE ===
   let tamañoFuente = parseFloat(localStorage.getItem("tamañoFuente")) || 1;
   html.style.fontSize = `${tamañoFuente}rem`;
 
-  fuenteBtn.addEventListener("click", () => {
-    tamañoFuente = Math.round((tamañoFuente + 0.1) * 10) / 10;
-    if (tamañoFuente > 1.3) tamañoFuente = 1;
+  if (fuenteBtn) {
+    fuenteBtn.addEventListener("click", () => {
+      tamañoFuente = Math.round((tamañoFuente + 0.1) * 10) / 10;
+      if (tamañoFuente > 1.3) tamañoFuente = 1;
 
-    html.style.fontSize = `${tamañoFuente}rem`;
-    localStorage.setItem("tamañoFuente", tamañoFuente);
-  });
+      html.style.fontSize = `${tamañoFuente}rem`;
+      localStorage.setItem("tamañoFuente", tamañoFuente);
+    });
+  }
 });
